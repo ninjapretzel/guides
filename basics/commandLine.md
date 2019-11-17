@@ -1,6 +1,7 @@
 
-# Command-line Stuff
-# Basic commands 
+# Running commands on a Command-line
+
+## Basic commands 
 [`pwd`](#pwd)  
 [`ls`](#ls)  
 [`mkdir`](#mkdir)  
@@ -11,7 +12,8 @@
 [`cat`](#cat)  
 [Pipes and redirection `( > | < )`](#pipes-and-redirection)  
 
-# Things to note 
+## Notes
+[Special Directories](#special-directories)  
 [Wrap Spaces](#wrap-spaces-in-names-in-quotes)  
 [Escape Spaces](#escape-spaces-in-names)  
 [Removing Folders](#removing-folders)  
@@ -22,7 +24,7 @@ Stands for '__P__ rint __W__ orking __D__ irectory'
 Useful when your terminal doesn't show you the working (current) directory  
 `$> pwd`
 ```
-D:\Dev\VisualStudio\ExServer\ExServer
+/Development/VisualStudio/ExServer/ExServer
 ```
 
 # `ls`
@@ -134,7 +136,7 @@ Names still have the same restrictions as with `mkdir`, and need to be closed
 using all of the above folders:  
 `$> pwd`
 ```
-D:\Dev\examples
+/Development/examples
 ```
 `$> ls`
 ```
@@ -146,8 +148,47 @@ D:\Dev\examples
 ```
 `$> pwd`
 ```
-D:\Dev\examples\ayy
+/Development/examples/ayy
 ```
+
+### Special Directories
+There are a number of special directories, which names are reserved.  
+`.` Always points to the current directory  
+`..` Always points to the parent directory  
+`/` Always points to the root directory  
+`~` Always points to the home (user) directory (name `~` is not actually reserved!)
+
+If one of these special directories starts a path, that special directory will be used.  
+Note: all output from pwd starts with a `/`, which is the root directory.  
+
+If you want to go up a folder:  
+`$> pwd`
+```
+/Development/examples/ayy
+```
+`$> cd ..`
+```
+(no output)
+```
+`$> pwd`
+```
+/Development/examples
+```
+
+Say you have a directory named `~` sitting somewhere on your drive...  
+`$> ls`
+```
+ ~/
+```
+And you want to enter that directory, running  
+`$> cd ~` 
+won't do that, but would change to your home directory  
+instead, you would want to run
+`$> cd ./~` so that it would use the current directory as a starting point
+```
+
+```
+
 
 # `touch`
 Doesn't stand for anything.  
@@ -192,6 +233,13 @@ rm: cannot remove 'yep\': Is a directory
 ```
 (no output)
 ```
+
+### Help
+`$> rm --help`  
+This flag will show a usage guide for `rm`  
+
+Hallariously, if you have a folder named `'--help'` that you want to remove . . .  
+`$> rm "./--help"`
 
 # `echo`
 Echo. Echo. Echo.  
@@ -260,17 +308,19 @@ or a page at a time (space)
 # Redirect into program `<`
 This redirects a file's content into a program  
 Notice the subtle difference between the following:  
-`$> wc < outfile.txt`
-```
-(lines words characters)
-```
 `$> wc outfile.txt`
 ```
 (lines words characters) outfile.txt
 ```
-
+`$> wc < outfile.txt`
+```
+(lines words characters)
+```
 Some programs may be able to open a file and read input, but they know where the data comes from, and may change their behavior if they have that information.  
 Passing data by `<` changes the way the program recieves the information.
 
 ### shells
-Note that different shells (the program that actually runs your commands) may behave differently. Different operating systems have different shells available, and not all of them will act exactly the same.
+Note that different shells (the program that actually runs your commands) may behave differently. Different operating systems have different shells available, and not all of them will act exactly the same.  
+Some things might behave slightly differently across Mac, Linux, Windows, or work differently inside of different shells (zsh, bash, cmd, powershell, cmder) within one operating system. 
+
+Even the act of running a program is at the mercy of another program!
