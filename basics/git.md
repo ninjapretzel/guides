@@ -32,7 +32,8 @@ Some good Git GUIs:
 Initializes a new repository in the current working directory (creates a `./.git` folder).  
 Note, this starts with:
 - no files tracked
-- no remotes  
+- no remotes
+
 You will have to do all necessary steps to add remotes if you want to push your changes to a remote repository (eg, github)  
 (see [`git remote`](#git-remotes))
 ```
@@ -41,6 +42,7 @@ C:\Dev\examples
 λ git init
 Initialized empty Git repository in C:/Dev/examples/.git/
 ```
+
 
 # `git clone`
 Downloads a copy of a repository, including all of its history, from a given url.  
@@ -228,10 +230,14 @@ Use this command if you prefer doing things the hard way, or if you need to work
 To do the exact same thing that `git clone blah` will do, but in more steps, do  the following:
 ```
 λ mkdir XtoJSON
+
 λ cd XtoJSON
+
 λ git init
 Initialized empty Git repository in C:/Dev/examples/.git/
+
 λ git remote add origin https://github.com/ninjapretzel/XtoJSON.git
+
 λ git pull origin master
 remote: Enumerating objects: 179, done.
 remote: Counting objects: 100% (179/179), done.
@@ -242,7 +248,6 @@ Resolving deltas: 100% (327/327), done.
 From https://github.com/ninjapretzel/XtoJSON
  * branch            master     -> FETCH_HEAD
  * [new branch]      master     -> origin/master
-
 ```
 
 
