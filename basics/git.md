@@ -3,7 +3,15 @@
 GUIs exist, but still just run commands for you, and display the output nicely.  
 Most developers will at some point need to run some git commands.
 
-## Commands
+I do suggest getting a git GUI (not GitHub's, it kinda sucks).  
+The primary benefit of a good GUI is to make it so you don't need to memorize these and 100s of other commands.  
+
+Some good Git GUIs: 
+- TortoiseGit: https://tortoisegit.org/ (unfortunately, Windows Only)
+- GitExtensions: https://gitextensions.github.io/ (Windows/Linux/Mac)
+- SourceTree: https://tortoisegit.org/ (Windows/Mac Only)
+
+## Basic GIT Commands
 ### `git`ing started
 [`git init`](#git-init)  
 [`git clone`](#git-clone)  
@@ -12,8 +20,10 @@ Most developers will at some point need to run some git commands.
 [`git config`](#git-config)  
 [`git add`](#git-add)  
 [`git commit`](#git-commit)
+[`git push`](#git-push)
+[`git pull`](#git-pull)
 
-### Advanced operation
+### Slightly more advanced operation
 [`git remote`](#git-remote)
 [`git branch`](#git-branch)
 [`git checkout`](#git-checkout)
@@ -107,11 +117,108 @@ If you want to change them in a per-repository basis, use
 # `git add`
 This command lets you 'stage' files for commit.  
 Staged files are what get committed with `git commit`, and you can leave some changes unstaged to leave them out of commits.
-
-# `git commit`
-This command lets you 'commit' staged changes. This creates a checkpoint that you can restore.
 ```
 λ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        basics/git.md
+        basics/github.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+λ git add basics\git.md
+
+λ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   basics/git.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        basics/github.md
+```
+
+# `git commit`
+This command lets you 'commit' staged changes. This creates a checkpoint that you can restore.  
+You must provide a message, which can be done with the following:  
+`$> git commit -m "Descriptive message"`
+```
+λ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   basics/git.md
+
+λ git commit -m "Adds git commands file"
+[master 3eb305f] Adds git commands file
+ 1 file changed, 139 insertions(+)
+ create mode 100644 basics/git.md
+```
+
+# `git push`
+Pushes up any commits to the remote repository.  
+May fail if there are any changes on the remote repository that conflict with your changes...
+
+How it looks when there are local changes the remote does not have yet:
+```
+λ git push
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 2.12 KiB | 2.12 MiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/ninjapretzel/guides.git
+   a121bd4..3eb305f  master -> master
+```
+
+How it looks when there are no changes the remote has:
+```
+λ git push
+Everything up-to-date
+```
+
+Can push specific branches up (see also [`git branch`](#git-branch) and[`git checkout`](#git-checkout))  
+`git push REMOTE BRANCH`
+```
+λ git push origin master
+Everything up-to-date
+```
+
+# `git pull`
+Pulls down any changes from the remote repository, and applies them to the working directory.  
+May fail if there are any changes on the remote repository that conflict with your changes...
+
+Automatically tries to pull the changes from the same working branch on the default remote.
+```
+λ git pull
+Already up to date.
+```
+For most purposes if you're on `master` already, the above is the same as:
+```
+λ git pull origin master
+Already up to date.
+```
+
+# `git fetch`
+Pulls changes down, but doesn't necessarily apply them to the working directory.  
+Typically used to grab changes from different remotes.
+```
+λ git fetch --all
+Fetching origin
 ```
 
 # `git remote`
@@ -137,3 +244,40 @@ From https://github.com/ninjapretzel/XtoJSON
  * [new branch]      master     -> origin/master
 
 ```
+
+
+
+# `git branch`
+# `git checkout`
+Commands used to create and manage branches.
+
+Creating and using a branch: (new branch uses current working 'head')
+```
+λ git branch NewBranch
+
+λ git checkout NewBranch
+Switched to branch 'NewBranch'
+
+λ git status
+On branch NewBranch
+nothing to commit, working tree clean
+```
+
+Both can be done at the same time:
+```
+λ git checkout -b AnotherNewBranch
+Switched to a new branch 'AnotherNewBranch'
+```
+
+You can also delete a branch, this will remove it from the local repository.
+```
+λ git branch -d NewBranch
+Deleted branch NewBranch (was 153bec2).
+```
+
+Switching to an existing branch will likely change/add/remove files in your working directory.
+```
+λ git checkout master
+Switched to branch 'master'
+```
+
